@@ -1,7 +1,7 @@
 # Выбрать через консоль нужную директорию cd /d D:\
 # git clone git@github.com:builuk1/cloud03example.git
-# Win venv\Scripts\activate    OS/UNIX venv/bin/activate
 # venv python 3.10
+# Win venv\Scripts\activate    OS/UNIX venv/bin/activate
 # python3 -m pip install --upgrade pip
 # pip install -r requirements.txt
 # settings > tools> python integrateg tools > testing > pytest
@@ -18,7 +18,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from XPATH import main_menu_xpath
+from XPATH import main_menu_xpath, main_page, shop_page
 
 
 def test_task_2():
@@ -89,3 +89,29 @@ def test_task_2():
     )
     contacts_ru_button.click()
 
+def test_task_3():
+    driver = webdriver.Chrome()
+    driver.get('http://yanigen.com.ua')
+    driver.maximize_window()
+
+    price_xpath = main_page.xpath_COMPACT + main_page.xpath_following_price
+    price_home_page = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, price_xpath)
+        )
+    )
+    price = price_home_page.text#588 грн.
+    product_button = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, main_page.xpath_COMPACT)
+        )
+    )
+    product_button.click()
+    price_xpath = main_page.xpath_COMPACT + main_page.xpath_following_price
+    price_home_page = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, shop_page.price)
+        )
+    )
+    product_price = price_home_page.text
+    assert price == product_price

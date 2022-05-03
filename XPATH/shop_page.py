@@ -1,0 +1,1 @@
+price = '//span[@class="PricesalesPrice"]'
