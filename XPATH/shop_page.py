@@ -1,1 +1,5 @@
 price = '//span[@class="PricesalesPrice"]'
+add_to_cart = '//input[@name="addtocart"]'
+continue_button = '//a[@id="continue"]'
+see_cart = '//a[@href="/ru/shop/cart"]'
+total_price = '//span[@class="PricebillTotal"]'

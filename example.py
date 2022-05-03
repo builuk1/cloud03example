@@ -115,3 +115,95 @@ def test_task_3():
     )
     product_price = price_home_page.text
     assert price == product_price
+
+def test_task_4():
+    driver = webdriver.Chrome()
+    driver.get('http://yanigen.com.ua')
+    driver.maximize_window()
+
+    price_xpath = main_page.xpath_COMPACT + main_page.xpath_following_price
+    price_home_page = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, price_xpath)
+        )
+    )
+    price = price_home_page.text#588 грн.
+    product_button = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, main_page.xpath_COMPACT)
+        )
+    )
+    product_button.click()
+    price_xpath = main_page.xpath_COMPACT + main_page.xpath_following_price
+    price_home_page = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, shop_page.price)
+        )
+    )
+    product_price = price_home_page.text
+    assert price == product_price
+    add_button = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, shop_page.add_to_cart)
+        )
+    )
+    add_button.click()
+    continue_button = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, shop_page.continue_button)
+        )
+    )
+    continue_button.click()
+    home_ru_button = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, main_menu_xpath.home_ru)
+        )
+    )
+    text_home_ru_button = home_ru_button.text
+    assert text_home_ru_button == "ГЛАВНАЯ"
+    home_ru_button.click()
+
+    price_xpath = main_page.xpath_HEIRLOOM3 + main_page.xpath_following_price
+    price_home_page = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, price_xpath)
+        )
+    )
+    price1 = price_home_page.text  # 588 грн.
+    product_button = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, main_page.xpath_HEIRLOOM3)
+        )
+    )
+    product_button.click()
+    price_xpath = main_page.xpath_HEIRLOOM3 + main_page.xpath_following_price
+    price_home_page = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, shop_page.price)
+        )
+    )
+    product_price1 = price_home_page.text
+    assert price1 == product_price1
+
+    add_button = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, shop_page.add_to_cart)
+        )
+    )
+    add_button.click()
+    cart_button = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, shop_page.see_cart)
+        )
+    )
+    cart_button.click()
+    total_price_e = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, shop_page.total_price)
+        )
+    )
+    total_price = total_price_e.text
+    price_ = int(price.split(' ')[0])
+    price1_ = int(price1.split(' ')[0])
+    t_price = str(price_ + price1_)+" "+price1.split(' ')[1]
+    assert t_price == total_price
